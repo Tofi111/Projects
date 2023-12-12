@@ -1,0 +1,8 @@
+london
+Riga
+Amsterdam
+minsk
+brussels
+kiev
+warsaw
+krakow

@@ -1,0 +1,6 @@
+x canary test
+x program picks a random word 
+x program picks a random word and scrambles it
+x program gives zero points for wrong spelling
+x program gives partial points to the user based on one for each vowel and two for each consonant
+x program 
