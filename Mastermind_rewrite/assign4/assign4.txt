@@ -1,0 +1,62 @@
+Assign4: Due 11:59PM CT December 1
+
+***Please review the top part of ../hw1/hw1.txt***
+***Your chance of success greatly increases if you start very early. Your chance of failure increases if you start late. Please use as many reviews as you possibly can.***
+
+
+Using test first development, write the program described below.
+
+An agency specializes in evaluating job applicants. Different clients using their service will want applicants to be evaluated based on different criteria. New criteria not known today may be added in the future. Some existing criteria may also be removed at any time. Not all available criteria will be used by every client.
+
+Examples of criteria are employment status, criminal records, credit records, Security clearance, etc. For example, the employment status criterion will return a response of its evaluation with a status and reason, like so: pass, "applicant has had previous employment." As another example, the criminal records criterion may respond fail, "person has done time for bank robbery."
+
+For the purpose of this assignment, we will fake some response in each of the criteria when an evaluation is requested for applicants.
+
+Write a console application that will allow the user of the program to first choose the criteria they want to use, from a dynamic list of available criteria. Then evaluate the application for all the selected criteria. Finally the program will print the total result, pass or fail (pass only if all criteria passed) and provide a summary of the evaluations for that applicant. 
+
+Once you complete coding, please answer the following:
+
+1. What design principles did you use in this assignment? Discuss.
+
+We utilized SRP, OCP, DRY, SLAP, and DIP in our project.
+
+The Single Responsibility Principle (SRP) stipulates that a module, class, or function should have only one responsibility and should only need one reason to change. In our assignment, we applied SRP by organizing multiple files, ensuring that each file has a single responsibility. For instance, the evaluator module exclusively contained criteria evaluators, a separate file handled fetching all criteria names and criteria evaluator functions, and another file focused solely on processing the application.
+
+The Open-Closed Principle (OCP) states that objects or entities should be open for extension but closed for modification. Our program aligns with this principle as the criteria evaluator functions have been written in a way that adding or removing a new criterion involves writing new code or removing a file without altering existing files.
+
+The Don't Repeat Yourself (DRY) principle emphasizes avoiding code duplication and redundant efforts. We adhered to this principle by leveraging some built-in Python functions instead of manually implementing them. An example is the team eventually using the `replace()` function instead of the initial conditional statement.
+
+The Single Level Abstraction Principle (SLAP) suggests that all functions in a method should be at the same level of abstraction, resulting in clean, simpler, and reusable code. We adhered to SLAP by avoiding lengthy and complex functions, opting to create specific functions for distinct tasks. For instance, in the UI console program, 'create_application' exclusively generates a particular application and uses 'get_application_data' to obtain user input, maintaining a single level of abstraction for each.
+
+The Dependency Inversion Principle (DIP) asserts that high-level modules should not depend on low-level modules; both should depend on abstraction. Abstractions should not depend on details; details should depend on abstractions. In our 'process_applicant' function, instead of directly relying on the evaluators module, we applied DIP by sending an evaluator function as an argument to 'process_applicant.'
+
+2. Any surprises or things that you did not expect?
+
+We encountered a couple of unexpected findings that intrigued us. Firstly, the utilization of variable-length argument lists passed to the 'process_applicant' function. Initially, we supplied a list of criteria evaluators, but we found a more efficient approach by directly passing 'evaluate_criterias' as an argument, leveraging the flexibility provided by variable-length abstraction.
+
+Another surprise is the use of the reduce function. Initially, we employed a complex code structure to generate the final response based on evaluator feedback. However, the use of the reduce function significantly simplified and streamlined the code.
+
+3. What design patterns did you use in this assignment? Discuss.
+
+The design patterns we utilized in this project are Composite, Abstract Factory, Bridge, Decorator, and Iterator.
+
+The Composite Method pattern asserts that each method should handle only a single level of abstraction. Its primary goal is to break down large and complex methods into smaller and simpler ones by applying the SLAP design principle. One instance where we applied the Composite Method pattern is in the UI console program. Instead of creating a large method to take user criteria input and get criteria names while handling the "no_criteria" case, we used the Composite Method design pattern. This led to three functions: 'get_criteria_names', 'get_criteria_input', and 'is_no_sort'. 'get_criteria_names' has the sole responsibility of mapping criteria input to names, 'get_criteria_input' is responsible for obtaining user input from the console, and 'is_no_sort' checks whether 'no_sort' is selected by the user or not.
+
+Abstract Factory is a creational design pattern that abstracts away the instantiation process by providing an interface for creating families of related objects. We applied the Abstract Factory pattern in 'fetch_a_criterion' where dynamic import based on a naming convention fetches a specific criteria's evaluation function. The naming convention is designed such that each evaluator in the evaluators module has the ending word as the criteria name. The function 'fetch_a_criteria' takes the criteria (name) as input and, using the naming convention, imports the module specific to the input criteria (name) and returns the 'evaluate_applicant' specific to that criterion. Hence, using reflection, we implemented the Abstract Factory pattern where 'fetch_a_criterion' fetches and returns the response function 'evaluate_applicant' (family) specific to the respective criteria, making the system independent of how 'evaluate_applicant' is composed in each criterion. This makes 'fetch_a_criteria' OCP compliant.
+
+The Bridge design pattern is a structural pattern whose main aim is to decouple an abstraction from its implementation so that the two can vary independently. We applied the Bridge pattern in the 'process_applicant' function by sending a list of 'evaluate_applicant' functions for each criterion instead of depending on the evaluators module. This made the code OCP compliant and decoupled the code inside 'process_applicant,' ensuring it is not affected by the criteria being used or when new criteria are added. By making it possible to switch evaluators ('evaluate_applicant') at runtime, we avoided 'process_applicant' having a permanent binding to a particular evaluator.
+
+The Decorator design pattern preserves the interface and enhances the responsibility of objects that implement the same interface dynamically. We implemented the Decorator design pattern in the 'process_applicant' (Decorator), which takes a variable number of criteria evaluators ('evaluate_criterias') and obtains responses for each criterion evaluation by sending application data as an argument to the evaluators. The responses are then decorated or chained through the reduce function to generate a final response. The Decorator pattern enables functionality (in our case, criteria evaluators) to be added or removed at runtime.
+
+The Iterator design pattern is a behavioral pattern whose aim is to provide a way to access or navigate elements of an aggregate sequentially without exposing its underlying representation. In our assignment, we used an external iterator in many places. For example, we employed the same syntax for each iterator to iterate over a collection of variable-length arguments ('evaluate_criterias') in 'process_applicant' and used the same iterator syntax to iterate over each criterion name in the 'get_criterias' function from the UI.
+
+Total [100]: 100
+Program works as expected [20]:
+All tests pass [10]:
+Test quality [10]:
+Code coverage [10]:
+Design quality [10]:
+Design for extensibility without code change (DRY + OCP) [20]:
+Code quality [10]:
+Response to questions [10]:
+

@@ -1,0 +1,86 @@
+Assign3: Due 11:59PM CT November 3 [Extended November 10 due to server fiasco]
+
+***Please review the top part of ../hw1/hw1.txt***
+***Your chance of success greatly increases if you start very early. Your chance of failure increases if you start late. Please use as many reviews as you possibly can.***
+
+
+
+An airport has IATA code (a three letter string), name, city, state, current temperature in F, and delay (true or false). Write a console program that will accept from the user one of different criteria for sorting multiple airport data and printing to the console. The output should have the airport name in all caps, the other details can be in mixed case, as provided.
+
+The criteria that will be provided by the program are, sort by
+0. Nothing (mo sorting)
+1. IATA code
+2. Name
+3. City,
+4. State
+5. Delay
+6. Temperature
+7. City and Name (if the city is the same then sort by Name)
+
+Write the program such that if we add a new criteria we will have to add new code, but not change any existing files.
+
+Whereas the data may come from different sources in general, we'll assume that the data is present in a separate source code file, the pseudocode for which is given below:
+
+new Airport("IAD", "Dulles Intl", "Washington", "DC", 71, true)
+new Airport("ORD", "O'Hare International", "Chicago", "IL", 62, true)
+new Airport("MDW", "Midway International", "Chicago", "IL", 60, false)
+new Airport("IAH", "George Bush Intercont.", "Houston", "TX", 82, true)
+new Airport("SFO", "San Francisco Intl.", "San Francisco", "CA", 59, false)
+new Airport("LAX", "Los Angeles Intl.", "Los Angeles", "CA", 84, false)
+new Airport("HOU", "Hobby", "Houston", "TX", 80, false)
+
+
+Please bring forward the practices, techniques, and tools you have learned so far. This includes: 
+Good code quality
+Lightweight design
+Minimum code
+Automated testing                                                         
+Code coverage
+Continuous integration
+
+Once you complete coding, please answer the following:
+
+1. What design principles did you use in this assignment? 
+We made use of SRP, OCP, DRY, and SLAP.
+
+SRP which is Single Responsibility Principle dictates that a module, class or function only has one responsibility and should only need one reason to change. We made use of this in the assignment by having multiple files and ensuring each file has a single responsibility, for instance, we had airport_sorters module that contained only the sorting files, we also had a file that only dealt with fetching criteria and fetching sort functions, and also had a file to just process airports.
+
+The Open-Closed Principle states that objects or entities should be opened for extension but closed for modification, this principle can be observed in our program because our sort by criteria functions have all been written in a way that if we added a new criteria, we would only be writing new code and not changing existing files.
+
+Another principle is the DRY principle which emphasizes not only to avoid duplicating code but duplicating efforts as well. We made use of this principle by taking advantage of some built-in python functions rather than writing them ourselves, an example would be the team eventually using the replace() function in place of the conditional statement we had initially written.
+
+SLAP which is the Single Level Abstraction Principle proposes that all the functions in a method should be at the same level of abstraction which leads to clean, simpler and reusable code. We made use of this by avoiding writing long and complex functions and writing specific function for specific tasks, for example, process_airports is a function takes a list of airports, sorts the list based on a specified criteria or leaves it unsorted if no sorting criteria are provided and returns the list with the names converted to uppercase.
+
+The sorting_based_on_criteria function takes a list of airports and a criteria string, and it sorts the airports based on the values of the specified criteria, fetch_a_sorter takes a criteria string, dynamically constructs the module name based on the criteria, imports that module, and retrieves a sorting function named "sort_by_criteria" from the module. Fetch_sort_criteria is a function that fetches a list of criteria from the modules in the "airport_sorters" package directory, the process_name function is then applied to each criteria name before returning the list.
+
+Finally, process_name is a function that takes a criteria name, removes "sort_by_", replaces underscores with spaces, and returns the modified name as a string, which makes the criteria names user-friendly.
+
+
+2. Any interesting lessons you learned in this assignment? 
+We came accross some interesting lessons while working on this assignment which includes, being intentive when writing code, the importance of using design principles, understanding design requirements that might be implied in requirement list and also evaluating our design at every step we write code to improve code quality.
+
+3. Any surprises or things that you did not expect? Discuss.
+There were a few surprises we did not expect which are listed below.
+
+We had initially thought that implementing a single 'sort' function that would accept a criterion and return a sorted list was a good idea, however, upon coding that logic, it led to our program being complex and voilating several design principles such as OCP and SRP.
+
+We also did not anticipate that 'process_airport' would take a sort function as an argument, we had assumed that the `airport_data_info_processor` would depend on the `airport_sorters` module for sorting functionality. But, we realized that this would be a poor idea as it violates the Open-Closed Principle (OCP), requiring changes to the `airport_info_processor` every time a new criteria is added to the system. After a discussion, we arrived at the conclusion that a better option is to send the sort function as an argument to 'process_airport' (Abstract Factory), which would decouple the dependency on the `airport_data_info_processor` module.
+
+Moreover, after completing the code and tests for 'airport_data_info_processor', we did not expect to write another module - 'airport_fetch_sorter' to fetch sorters and retrieve a list of available criteria. Initially, we thought we could implement this directly in the GUI, but after having a discussion, we realized that implementing the code to fetch sorters and list available criteria would be too complex, introduce many dependencies, and violate the Open-Closed Principle (OCP) because we would have to modify the GUI file every time a new criterion is added.
+
+Another surprise was the use of naming conventions in 'airport_fetch_sorter,' which turned out to be a clever way to address violations of the Open-Closed Principle (OCP) when adding new criteria to the system.
+
+Finally, the use of data classes significantly improved the code in 'airport.py,' making it less verbose and giving it a cleaner appearance.
+
+Total [100]: 98
+Program works as expected [20]:
+All tests pass [10]:
+Test quality [10]:
+Code coverage [10]:
+Design quality [10]:
+Design for extensibility without code change [20]:
+Code quality [10]:
+
+Response to questions [10]: -2
+DIP is one of the most important principles
+Spellcheck
